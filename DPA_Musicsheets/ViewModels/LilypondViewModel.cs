@@ -46,7 +46,7 @@ namespace DPA_Musicsheets.ViewModels
         {
             _fileHandler = fileHandler;
 
-            _fileHandler.LilypondTextChanged += (src, e) =>
+            _fileHandler.lillypondClass.LilypondTextChanged += (src, e) =>
             {
                 _textChangedByLoad = true;
                 LilypondText = _previousText = e.LilypondText;
@@ -71,7 +71,7 @@ namespace DPA_Musicsheets.ViewModels
                         _waitingForRender = false;
                         UndoCommand.RaiseCanExecuteChanged();
 
-                        _fileHandler.LoadLilypond(LilypondText);
+                        _fileHandler.lillypondClass.LoadLilypond(LilypondText);
                     }
                 }, TaskScheduler.FromCurrentSynchronizationContext()); // Request from main thread.
             }
@@ -104,7 +104,7 @@ namespace DPA_Musicsheets.ViewModels
                 }
                 else if (extension.EndsWith(".ly"))
                 {
-                    _fileHandler.SaveToLilypond(saveFileDialog.FileName);
+                    _fileHandler.lillypondClass.SaveToLilypond(saveFileDialog.FileName);
                 }
                 else if (extension.EndsWith(".pdf"))
                 {

@@ -26,7 +26,7 @@ namespace DPA_Musicsheets.ViewModels
             _fileHandler = fileHandler;
             Staffs = new ObservableCollection<MusicalSymbol>();
 
-            _fileHandler.WPFStaffsChanged += (src, args) =>
+            _fileHandler.lillypondClass.WPFStaffsChanged += (src, args) =>
             { 
                 Staffs.Clear();
                 foreach (var symbol in args.Symbols)
