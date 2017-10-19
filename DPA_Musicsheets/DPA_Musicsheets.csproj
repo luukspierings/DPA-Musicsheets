@@ -109,9 +109,12 @@
     <Compile Include="Messages\CurrentStateMessage.cs" />
     <Compile Include="Managers\FileHandler.cs" />
     <Compile Include="Models\Bar.cs" />
+    <Compile Include="Models\BaseNote.cs" />
     <Compile Include="Models\LilypondToken.cs" />
     <Compile Include="Models\LilypondTokenKind.cs" />
     <Compile Include="Models\MusicNote.cs" />
+    <Compile Include="Models\PitchModifier.cs" />
+    <Compile Include="Models\RestNote.cs" />
     <Compile Include="Models\Staff.cs" />
     <Compile Include="ViewModels\MidiPlayerViewModel.cs" />
     <Compile Include="ViewModels\StaffsViewModel.cs" />
