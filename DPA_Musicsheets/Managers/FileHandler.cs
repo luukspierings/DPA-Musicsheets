@@ -26,7 +26,16 @@ namespace DPA_Musicsheets.Managers
 
         public event EventHandler<MidiSequenceEventArgs> MidiSequenceChanged;
 
-        
+
+
+        public void updateMidiSequence()
+        {
+
+            MidiSequenceChanged?.Invoke(this, new MidiSequenceEventArgs() { MidiSequence = MidiSequence });
+
+        }
+
+
 
         public void OpenFile(string fileName)
         {
@@ -34,7 +43,7 @@ namespace DPA_Musicsheets.Managers
             {
                 MidiSequence = new Sequence();
                 MidiSequence.Load(fileName);
-                MidiSequenceChanged?.Invoke(this, new MidiSequenceEventArgs() { MidiSequence = MidiSequence });
+                updateMidiSequence();
                 LoadMidi(MidiSequence);
             }
             else if (Path.GetExtension(fileName).EndsWith(".ly"))
@@ -48,7 +57,7 @@ namespace DPA_Musicsheets.Managers
                 lillypondClass.LoadLilypond(sb.ToString());
 
                 MidiSequence = midiClass.GetSequenceFromWPFStaffs(lillypondClass.WPFStaffs);
-                MidiSequenceChanged?.Invoke(this, new MidiSequenceEventArgs() { MidiSequence = MidiSequence });
+                updateMidiSequence();
             }
             else
             {
@@ -65,7 +74,7 @@ namespace DPA_Musicsheets.Managers
             lillypondClass.LoadLilypond(lilypondContent);
 
             MidiSequence = midiClass.GetSequenceFromWPFStaffs(lillypondClass.WPFStaffs);
-            MidiSequenceChanged?.Invoke(this, new MidiSequenceEventArgs() { MidiSequence = MidiSequence });
+            updateMidiSequence();
         }
 
 

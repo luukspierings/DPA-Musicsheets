@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.Models
 {
-    class Staff
+    class RestNote : BaseNote
     {
-        // maatsoort
-        // lijst met Bars
-        // treble of bass
-        // tempo
-        // 
+
+
+
+
+
+
     }
 }

@@ -103,21 +103,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interpreters\AbstractExpression.cs" />
+    <Compile Include="Interpreters\NewBarExpression.cs" />
     <Compile Include="Managers\Lillypond.cs" />
     <Compile Include="Managers\Midi.cs" />
-    <Compile Include="Managers\MidiSequenceEventArgs.cs" />
-    <Compile Include="Managers\WPFStaffsEventArgs.cs" />
-    <Compile Include="Managers\LilypondEventArgs.cs" />
-    <Compile Include="Messages\CurrentStateMessage.cs" />
+    <Compile Include="Events messages\MidiSequenceEventArgs.cs" />
+    <Compile Include="Events messages\WPFStaffsEventArgs.cs" />
+    <Compile Include="Events messages\LilypondEventArgs.cs" />
+    <Compile Include="Events messages\CurrentStateMessage.cs" />
     <Compile Include="Managers\FileHandler.cs" />
-    <Compile Include="Models\Bar.cs" />
-    <Compile Include="Models\BaseNote.cs" />
+    <Compile Include="New models and patterns\Bar.cs" />
+    <Compile Include="Interpreters\LilypondInterpreter.cs" />
+    <Compile Include="Interpreters\MidiInterpreter.cs" />
+    <Compile Include="New models and patterns\StaffBuilder.cs" />
+    <Compile Include="New models and patterns\BaseNote.cs" />
     <Compile Include="Models\LilypondToken.cs" />
     <Compile Include="Models\LilypondTokenKind.cs" />
-    <Compile Include="Models\MusicNote.cs" />
-    <Compile Include="Models\PitchModifier.cs" />
-    <Compile Include="Models\RestNote.cs" />
-    <Compile Include="Models\Staff.cs" />
+    <Compile Include="New models and patterns\MusicNote.cs" />
+    <Compile Include="New models and patterns\NoteFactory.cs" />
+    <Compile Include="New models and patterns\PitchModifier.cs" />
+    <Compile Include="New models and patterns\RestNote.cs" />
+    <Compile Include="New models and patterns\Staff.cs" />
     <Compile Include="ViewModels\MidiPlayerViewModel.cs" />
     <Compile Include="ViewModels\StaffsViewModel.cs" />
     <Compile Include="Views\MidiPlayerCtrl.xaml.cs">
