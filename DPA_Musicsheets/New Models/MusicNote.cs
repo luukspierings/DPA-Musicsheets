@@ -21,7 +21,10 @@ namespace DPA_Musicsheets.Models
             {
                 if (Dotted)
                 {
-                    return duration * 1.5f;
+
+                    float d = 1.0f / duration;
+                    float wDot = d * 1.5f;
+                    return 1.0f / wDot;
                 }
 
                 return duration;

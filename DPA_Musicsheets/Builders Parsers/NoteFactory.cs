@@ -14,13 +14,20 @@ namespace DPA_Musicsheets.New_models_and_patterns
         public int currentOctave = 4;
 
 
-        public BaseNote getNote(int duration, char pitch, bool dotted = false, PitchModifier modifier = PitchModifier.None)
+        public BaseNote getNote(int duration, string pitch, bool dotted = false)
         {
             MusicNote note = new MusicNote();
-            note.Duration = 1 / duration;
-            note.Pitch = pitch;
+
+            char[] pitchArray = pitch.ToCharArray();
+
+            if (pitchArray.Length > 0) note.Pitch = pitchArray[0];
+
+            if (pitchArray.Length > 3 && pitchArray[1] == 'i') note.PitchModifier = PitchModifier.Sharp;
+            else if (pitchArray.Length > 3 && pitchArray[1] == 'e') note.PitchModifier = PitchModifier.Flat;
+            else note.PitchModifier = PitchModifier.None;
+
+            note.Duration = 1.0f / duration;
             note.Dotted = dotted;
-            note.PitchModifier = modifier;
             note.Octave = currentOctave;
 
             return note;
@@ -29,7 +36,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
         public BaseNote getRest(int duration)
         {
             RestNote note = new RestNote();
-            note.Duration = 1/duration;
+            note.Duration = 1.0f/duration;
 
             return note;
         }

@@ -1,4 +1,5 @@
 ﻿using DPA_Musicsheets.Models;
+using DPA_Musicsheets.New_models_and_patterns;
 using PSAMControlLibrary;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,8 @@ namespace DPA_Musicsheets.Managers
         public void LoadLilypond(string content)
         {
             LilypondText = content;
+            LilypondToStaff parser = new LilypondToStaff();
+            parser.load(content);
 
             content = content.Trim().ToLower().Replace("\r\n", " ").Replace("\n", " ").Replace("  ", " ");
             LinkedList<LilypondToken> tokens = GetTokensFromLilypond(content);
