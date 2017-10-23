@@ -1,4 +1,5 @@
 ﻿
+using DPA_Musicsheets.Builders_Parsers;
 using DPA_Musicsheets.Models;
 using PSAMControlLibrary;
 using PSAMWPFControlLibrary;
@@ -69,6 +70,9 @@ namespace DPA_Musicsheets.Managers
 
         public void LoadMidi(Sequence sequence)
         {
+            MidiToStaff parser = new MidiToStaff();
+            parser.load(sequence);
+
             String lilypondContent = midiClass.LoadMidi(sequence);
 
             lillypondClass.LoadLilypond(lilypondContent);

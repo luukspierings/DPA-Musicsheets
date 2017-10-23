@@ -16,6 +16,22 @@ namespace DPA_Musicsheets.New_models_and_patterns
 
         private NoteFactory noteFactory = new NoteFactory();
 
+        public void setFirstMeasure(int fMeasure)
+        {
+            staff.firstMeasure = fMeasure;
+        }
+        public void setSecondMeasure(int sMeasure)
+        {
+            staff.secondMeasure = sMeasure;
+        }
+        public void setSound(String sound)
+        {
+            staff.sound = sound;
+        }
+        public void setTempo(int tempo)
+        {
+            staff.tempo = tempo;
+        }
 
 
         public StaffBuilder(int firstMeasure = 4, int secondMeasure = 4, String sound = "treble")
