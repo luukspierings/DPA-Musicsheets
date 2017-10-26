@@ -1,4 +1,5 @@
-﻿using DPA_Musicsheets.New_models_and_patterns;
+﻿using DPA_Musicsheets.Models;
+using DPA_Musicsheets.New_models_and_patterns;
 using Sanford.Multimedia.Midi;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace DPA_Musicsheets.Builders_Parsers
         StaffBuilder builder = new StaffBuilder();
 
 
-        public void load(Sequence sequence)
+        public Staff load(Sequence sequence)
         {
 
             int _beatNote = 4;        // De waarde van een beatnote.
@@ -63,9 +64,11 @@ namespace DPA_Musicsheets.Builders_Parsers
                                     if (previousNoteAbsoluteTicks > 0)
                                     {
                                         // Finish the last notelength.
-                                        double percentageOfBar;
-                                        int noteLength = GetNoteLength(previousNoteAbsoluteTicks, midiEvent.AbsoluteTicks, division, _beatNote, _beatsPerBar, out percentageOfBar);
-                                        builder.addNote(noteLength, lastNotePitch, deltaOctave);
+                                        double percentageOfBar = getPercentageOfBar(previousNoteAbsoluteTicks, midiEvent.AbsoluteTicks, division, _beatsPerBar);
+                                        int noteLength = GetNoteLength(previousNoteAbsoluteTicks, midiEvent.AbsoluteTicks, division, _beatNote, _beatsPerBar);
+
+                                        bool dotted = isDotted(previousNoteAbsoluteTicks, midiEvent.AbsoluteTicks, division, _beatNote, _beatsPerBar);
+                                        builder.addNote(noteLength, lastNotePitch, deltaOctave, dotted);
 
 
                                         percentageOfBarReached += percentageOfBar;
@@ -95,9 +98,9 @@ namespace DPA_Musicsheets.Builders_Parsers
                                 else if (!startedNoteIsClosed)
                                 {
                                     // Finish the previous note with the length.
-                                    double percentageOfBar;
+                                    double percentageOfBar = getPercentageOfBar(previousNoteAbsoluteTicks, midiEvent.AbsoluteTicks, division, _beatsPerBar);
 
-                                    int noteLength = GetNoteLength(previousNoteAbsoluteTicks, midiEvent.AbsoluteTicks, division, _beatNote, _beatsPerBar, out percentageOfBar);
+                                    int noteLength = GetNoteLength(previousNoteAbsoluteTicks, midiEvent.AbsoluteTicks, division, _beatNote, _beatsPerBar);
 
                                     if(lastNotePitch == "r")
                                     {
@@ -105,7 +108,8 @@ namespace DPA_Musicsheets.Builders_Parsers
                                     }
                                     else
                                     {
-                                        builder.addNote(noteLength, lastNotePitch, deltaOctave);
+                                        bool dotted = isDotted(previousNoteAbsoluteTicks, midiEvent.AbsoluteTicks, division, _beatNote, _beatsPerBar);
+                                        builder.addNote(noteLength, lastNotePitch, deltaOctave, dotted);
                                     }
 
                                     previousNoteAbsoluteTicks = midiEvent.AbsoluteTicks;
@@ -130,7 +134,7 @@ namespace DPA_Musicsheets.Builders_Parsers
 
             }
 
-            builder.getStaffLily();
+            return builder.getStaffObject();
         }
 
 
@@ -140,12 +144,12 @@ namespace DPA_Musicsheets.Builders_Parsers
             int deltaOctave = 0;
             while (distance < -6)
             {
-                deltaOctave++;
+                deltaOctave--;
                 distance += 8;
             }
             while (distance > 6)
             {
-                deltaOctave--;
+                deltaOctave++;
                 distance -= 8;
             }
 
@@ -159,21 +163,12 @@ namespace DPA_Musicsheets.Builders_Parsers
         }
 
 
-        private int GetNoteLength(int absoluteTicks, int nextNoteAbsoluteTicks, int division, int beatNote, int beatsPerBar, out double percentageOfBar)
+        private int GetNoteLength(int absoluteTicks, int nextNoteAbsoluteTicks, int division, int beatNote, int beatsPerBar)
         {
+            if (nextNoteAbsoluteTicks - absoluteTicks <= 0) return 0;
+
             int duration = 0;
-            int dots = 0;
-
-            double deltaTicks = nextNoteAbsoluteTicks - absoluteTicks;
-
-            if (deltaTicks <= 0)
-            {
-                percentageOfBar = 0;
-                return 0;
-            }
-
-            double percentageOfBeatNote = deltaTicks / division;
-            percentageOfBar = (1.0 / beatsPerBar) * percentageOfBeatNote;
+            double percentageOfBar = getPercentageOfBar(absoluteTicks, nextNoteAbsoluteTicks, division, beatsPerBar);
 
             for (int noteLength = 32; noteLength >= 1; noteLength -= 1)
             {
@@ -181,32 +176,43 @@ namespace DPA_Musicsheets.Builders_Parsers
 
                 if (percentageOfBar <= absoluteNoteLength)
                 {
-                    if (noteLength < 2)
-                        noteLength = 2;
+                    if (noteLength < 2) noteLength = 2;
+
+                    if (noteLength >= 17)     duration = 32;
+                    else if (noteLength >= 9) duration = 16;
+                    else if (noteLength >= 5) duration = 8;
+                    else if (noteLength >= 3) duration = 4;
+                    else                      duration = 2;
+
+                    break;
+                }
+            }
+
+            return duration;
+        }
+
+        private bool isDotted(int absoluteTicks, int nextNoteAbsoluteTicks, int division, int beatNote, int beatsPerBar)
+        {
+            if (nextNoteAbsoluteTicks - absoluteTicks <= 0) return false;
+
+            int dots = 0;
+            double percentageOfBar = getPercentageOfBar(absoluteTicks, nextNoteAbsoluteTicks, division, beatsPerBar);
+    
+            for (int noteLength = 32; noteLength >= 1; noteLength -= 1)
+            {
+                double absoluteNoteLength = (1.0 / noteLength);
+
+                if (percentageOfBar <= absoluteNoteLength)
+                {
+                    if (noteLength < 2) noteLength = 2;
 
                     int subtractDuration;
 
-                    if (noteLength == 32)
-                        subtractDuration = 32;
-                    else if (noteLength >= 16)
-                        subtractDuration = 16;
-                    else if (noteLength >= 8)
-                        subtractDuration = 8;
-                    else if (noteLength >= 4)
-                        subtractDuration = 4;
-                    else
-                        subtractDuration = 2;
-
-                    if (noteLength >= 17)
-                        duration = 32;
-                    else if (noteLength >= 9)
-                        duration = 16;
-                    else if (noteLength >= 5)
-                        duration = 8;
-                    else if (noteLength >= 3)
-                        duration = 4;
-                    else
-                        duration = 2;
+                    if (noteLength == 32) subtractDuration = 32;
+                    else if (noteLength >= 16) subtractDuration = 16;
+                    else if (noteLength >= 8) subtractDuration = 8;
+                    else if (noteLength >= 4) subtractDuration = 4;
+                    else subtractDuration = 2;
 
                     double currentTime = 0;
 
@@ -226,9 +232,19 @@ namespace DPA_Musicsheets.Builders_Parsers
                 }
             }
 
-            return duration /*+ new String('.', dots)*/;
+            return (dots >= 1);
         }
 
+
+
+        private double getPercentageOfBar(int absoluteTicks, int nextNoteAbsoluteTicks, int division, int beatsPerBar)
+        {
+            double deltaTicks = nextNoteAbsoluteTicks - absoluteTicks;
+            if (deltaTicks <= 0) return 0;
+
+            double percentageOfBeatNote = deltaTicks / division;
+            return ((1.0 / beatsPerBar) * percentageOfBeatNote);
+        }
 
 
 

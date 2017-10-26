@@ -32,6 +32,11 @@ namespace DPA_Musicsheets.Models
             set { duration = value; }
         }
 
+        public float BaseDuration
+        {
+            get { return duration; }
+        }
+
 
 
     }

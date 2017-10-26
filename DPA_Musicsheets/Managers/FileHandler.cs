@@ -70,14 +70,18 @@ namespace DPA_Musicsheets.Managers
 
         public void LoadMidi(Sequence sequence)
         {
-            MidiToStaff parser = new MidiToStaff();
-            parser.load(sequence);
+            MidiToStaff midiToStaff = new MidiToStaff();
+            StaffToLilypond staffToLilypond = new StaffToLilypond();
+            StaffToMidi staffToMidi = new StaffToMidi();
 
-            String lilypondContent = midiClass.LoadMidi(sequence);
+            Staff staff = midiToStaff.load(sequence);
 
-            lillypondClass.LoadLilypond(lilypondContent);
+            String lilypondContent = staffToLilypond.load(staff);
 
-            MidiSequence = midiClass.GetSequenceFromWPFStaffs(lillypondClass.WPFStaffs);
+
+            //lillypondClass.LoadLilypond(lilypondContent);
+
+            MidiSequence = staffToMidi.load(staff);
             updateMidiSequence();
         }
 

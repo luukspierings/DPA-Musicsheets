@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PSAMControlLibrary;
+using Sanford.Multimedia.Midi;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -55,6 +57,7 @@ namespace DPA_Musicsheets.Models
             // 6 * (1/8) = 0.75;
         }
 
+        
 
     }
 }

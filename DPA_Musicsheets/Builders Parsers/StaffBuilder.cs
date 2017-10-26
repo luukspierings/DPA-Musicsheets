@@ -84,23 +84,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
             return new Sequence();
         }
    
-        public String getStaffLily()
-        {
-
-            foreach(Bar b in staff.bars)
-            {
-                foreach(BaseNote n in b.notes)
-                {
-
-                    MusicNote note = (MusicNote)n;
-
-                    Debug.Write(note.Pitch.ToString() + 1.0f/note.Duration + " ");
-                }
-            }
-
-
-            return "";
-        }
+        
 
 
 

@@ -72,7 +72,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
                 }
 
             }
-            //builder.getStaffLily();
+
             return builder.getStaffObject();
         }
 

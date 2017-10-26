@@ -10,7 +10,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
     class NoteFactory
     {
 
-
+        // central C
         public int currentOctave = 4;
 
 
@@ -22,8 +22,8 @@ namespace DPA_Musicsheets.New_models_and_patterns
 
             if (pitchArray.Length > 0) note.Pitch = pitchArray[0];
 
-            if (pitchArray.Length > 3 && pitchArray[1] == 'i') note.PitchModifier = PitchModifier.Sharp;
-            else if (pitchArray.Length > 3 && pitchArray[1] == 'e') note.PitchModifier = PitchModifier.Flat;
+            if (pitchArray.Length >= 3 && pitchArray[1] == 'i') note.PitchModifier = PitchModifier.Sharp;
+            else if (pitchArray.Length >= 3 && pitchArray[1] == 'e') note.PitchModifier = PitchModifier.Flat;
             else note.PitchModifier = PitchModifier.None;
 
             note.Duration = 1.0f / duration;

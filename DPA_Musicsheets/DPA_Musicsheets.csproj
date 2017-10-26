@@ -104,6 +104,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Builders Parsers\MidiToStaff.cs" />
+    <Compile Include="Builders Parsers\StaffToLilypond.cs" />
+    <Compile Include="Builders Parsers\StaffToMidi.cs" />
     <Compile Include="Managers\Lillypond.cs" />
     <Compile Include="Managers\Midi.cs" />
     <Compile Include="Events messages\MidiSequenceEventArgs.cs" />
