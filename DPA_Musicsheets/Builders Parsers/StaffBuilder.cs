@@ -33,11 +33,15 @@ namespace DPA_Musicsheets.New_models_and_patterns
             staff.tempo = tempo;
         }
 
-
-        public StaffBuilder(int firstMeasure = 4, int secondMeasure = 4, String sound = "treble")
+        public void newStaff(int firstMeasure = 4, int secondMeasure = 4, String sound = "treble")
         {
             staff = new Staff(firstMeasure, secondMeasure, sound);
+            noteFactory = new NoteFactory();
+        }
 
+        public StaffBuilder()
+        {
+            newStaff();
         }
 
         public void addNote(int duration, string pitch = "", int deltaOctave = 0, bool isDotted = false)

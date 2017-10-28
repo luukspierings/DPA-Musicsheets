@@ -106,7 +106,15 @@
     <Compile Include="Builders Parsers\MidiToStaff.cs" />
     <Compile Include="Builders Parsers\StaffToLilypond.cs" />
     <Compile Include="Builders Parsers\StaffToMidi.cs" />
+    <Compile Include="Builders Parsers\StaffToWPF.cs" />
+    <Compile Include="Chain of responsibility\ContentType.cs" />
+    <Compile Include="Chain of responsibility\Handler.cs" />
+    <Compile Include="Chain of responsibility\LilypondHandler.cs" />
+    <Compile Include="Chain of responsibility\MidiHandler.cs" />
+    <Compile Include="Chain of responsibility\WPFHandler.cs" />
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="Managers\Lillypond.cs" />
+    <Compile Include="Managers\MainController.cs" />
     <Compile Include="Managers\Midi.cs" />
     <Compile Include="Events messages\MidiSequenceEventArgs.cs" />
     <Compile Include="Events messages\WPFStaffsEventArgs.cs" />
@@ -124,32 +132,6 @@
     <Compile Include="New Models\PitchModifier.cs" />
     <Compile Include="New Models\RestNote.cs" />
     <Compile Include="New Models\Staff.cs" />
-    <Compile Include="ViewModels\MidiPlayerViewModel.cs" />
-    <Compile Include="ViewModels\StaffsViewModel.cs" />
-    <Compile Include="Views\MidiPlayerCtrl.xaml.cs">
-      <DependentUpon>MidiPlayerCtrl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\StaffViewCtrl.xaml.cs">
-      <DependentUpon>StaffViewCtrl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LilypondViewerCtrl.xaml.cs">
-      <DependentUpon>LilypondViewerCtrl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\LilypondViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelLocator.cs" />
-    <Page Include="Views\MidiPlayerCtrl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\StaffViewCtrl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\LilypondViewerCtrl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

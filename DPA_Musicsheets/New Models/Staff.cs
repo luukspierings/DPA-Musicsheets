@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.Models
 {
-    class Staff
+    public class Staff
     {
 
         public List<Bar> bars = new List<Bar>();

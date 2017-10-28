@@ -23,7 +23,7 @@ namespace DPA_Musicsheets.Models
                 {
 
                     float d = 1.0f / duration;
-                    float wDot = d * 1.5f;
+                    float wDot = d / 1.5f;
                     return 1.0f / wDot;
                 }
 

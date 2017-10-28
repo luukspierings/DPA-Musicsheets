@@ -1,6 +1,7 @@
 ﻿
 using DPA_Musicsheets.Builders_Parsers;
 using DPA_Musicsheets.Models;
+using DPA_Musicsheets.New_models_and_patterns;
 using PSAMControlLibrary;
 using PSAMWPFControlLibrary;
 using Sanford.Multimedia.Midi;
@@ -21,31 +22,19 @@ namespace DPA_Musicsheets.Managers
         public Lillypond lillypondClass = new Lillypond();
         public Midi midiClass = new Midi();
 
-
-        
-        public Sequence MidiSequence { get; set; }
-
-        public event EventHandler<MidiSequenceEventArgs> MidiSequenceChanged;
+        LilypondToStaff lilypondToStaff = new LilypondToStaff();
+        MidiToStaff midiToStaff = new MidiToStaff();
 
 
-
-        public void updateMidiSequence()
-        {
-
-            MidiSequenceChanged?.Invoke(this, new MidiSequenceEventArgs() { MidiSequence = MidiSequence });
-
-        }
-
-
-
-        public void OpenFile(string fileName)
+        public Staff OpenFile(string fileName)
         {
             if (Path.GetExtension(fileName).EndsWith(".mid"))
             {
-                MidiSequence = new Sequence();
+                Sequence MidiSequence = new Sequence();
                 MidiSequence.Load(fileName);
-                updateMidiSequence();
-                LoadMidi(MidiSequence);
+
+                return midiToStaff.load(MidiSequence);
+
             }
             else if (Path.GetExtension(fileName).EndsWith(".ly"))
             {
@@ -55,34 +44,12 @@ namespace DPA_Musicsheets.Managers
                     sb.AppendLine(line);
                 }
                 
-                lillypondClass.LoadLilypond(sb.ToString());
-
-                MidiSequence = midiClass.GetSequenceFromWPFStaffs(lillypondClass.WPFStaffs);
-                updateMidiSequence();
+                return lilypondToStaff.load(sb.ToString());
             }
             else
             {
                 throw new NotSupportedException($"File extension {Path.GetExtension(fileName)} is not supported.");
             }
-        }
-
-        
-
-        public void LoadMidi(Sequence sequence)
-        {
-            MidiToStaff midiToStaff = new MidiToStaff();
-            StaffToLilypond staffToLilypond = new StaffToLilypond();
-            StaffToMidi staffToMidi = new StaffToMidi();
-
-            Staff staff = midiToStaff.load(sequence);
-
-            String lilypondContent = staffToLilypond.load(staff);
-
-
-            //lillypondClass.LoadLilypond(lilypondContent);
-
-            MidiSequence = staffToMidi.load(staff);
-            updateMidiSequence();
         }
 
 

@@ -24,6 +24,8 @@ namespace DPA_Musicsheets.New_models_and_patterns
 
         public Staff load(string content)
         {
+            builder.newStaff();
+
             content = content.Trim().ToLower()
                 .Replace("\\r\\n", " ")
                 .Replace("\r\n", " ")

@@ -62,7 +62,7 @@ namespace DPA_Musicsheets.Builders_Parsers
                     if (m.PitchModifier == PitchModifier.Sharp) pitch += "is";
 
                     // Calculate height
-                    int noteHeight = notesOrderWithCrosses.IndexOf(m.Pitch.ToString()) + ((m.Octave + 1) * 12);
+                    int noteHeight = notesOrderWithCrosses.IndexOf(m.Pitch.ToString()) + ((m.Octave) * 12);
                     //noteHeight += note.Alter;
                     notesTrack.Insert(absoluteTicks, new ChannelMessage(ChannelCommand.NoteOn, 1, noteHeight, 90)); // Data2 = volume
 

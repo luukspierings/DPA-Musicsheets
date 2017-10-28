@@ -18,6 +18,7 @@ namespace DPA_Musicsheets.Builders_Parsers
 
         public Staff load(Sequence sequence)
         {
+            builder.newStaff();
 
             int _beatNote = 4;        // De waarde van een beatnote.
             int _bpm = 120;             // Aantal beatnotes per minute.

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.Models
 {
-    class Bar
+    public class Bar
     {
 
         public List<BaseNote> notes = new List<BaseNote>();

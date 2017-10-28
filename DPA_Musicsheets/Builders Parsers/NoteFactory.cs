@@ -11,7 +11,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
     {
 
         // central C
-        public int currentOctave = 4;
+        public int currentOctave = 5;
 
 
         public BaseNote getNote(int duration, string pitch, bool dotted = false)
