@@ -113,6 +113,12 @@
     <Compile Include="Chain of responsibility\MidiHandler.cs" />
     <Compile Include="Chain of responsibility\WPFHandler.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\InsertClefCommand.cs" />
+    <Compile Include="Commands\InsertTempoCommand.cs" />
+    <Compile Include="Commands\InsertTimeCommand.cs" />
+    <Compile Include="Commands\CKey.cs" />
+    <Compile Include="Commands\OpenCommand.cs" />
+    <Compile Include="Commands\SaveCommand.cs" />
     <Compile Include="Managers\Lillypond.cs" />
     <Compile Include="Managers\MainController.cs" />
     <Compile Include="Managers\Midi.cs" />
@@ -121,6 +127,11 @@
     <Compile Include="Events messages\LilypondEventArgs.cs" />
     <Compile Include="Events messages\CurrentStateMessage.cs" />
     <Compile Include="Managers\FileHandler.cs" />
+    <Compile Include="Managers\MidiPlayer.cs" />
+    <Compile Include="Memento\LilypondEditor.cs" />
+    <Compile Include="Memento\LilyCaretaker.cs" />
+    <Compile Include="Memento\LilyOriginator.cs" />
+    <Compile Include="Memento\LilyMemento.cs" />
     <Compile Include="New Models\Bar.cs" />
     <Compile Include="Builders Parsers\LilypondToStaff.cs" />
     <Compile Include="Builders Parsers\StaffBuilder.cs" />

@@ -6,10 +6,18 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.Commands
 {
-    interface Command
+    abstract class Command
     {
+        protected string _pattern;
 
-        void execute();
+        public string Pattern
+        {
+            get
+            {
+                return _pattern;
+            }
+        }
+        public abstract void execute();
 
     }
 }

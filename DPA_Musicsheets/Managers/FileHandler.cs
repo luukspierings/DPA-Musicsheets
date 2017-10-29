@@ -2,6 +2,7 @@
 using DPA_Musicsheets.Builders_Parsers;
 using DPA_Musicsheets.Models;
 using DPA_Musicsheets.New_models_and_patterns;
+using Microsoft.Win32;
 using PSAMControlLibrary;
 using PSAMWPFControlLibrary;
 using Sanford.Multimedia.Midi;
@@ -13,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DPA_Musicsheets.Managers
 {
@@ -26,8 +28,20 @@ namespace DPA_Musicsheets.Managers
         MidiToStaff midiToStaff = new MidiToStaff();
 
 
+        public String selectFile()
+        {
+            string fileName = "";
+            OpenFileDialog openFileDialog = new OpenFileDialog() { Filter = "Midi or LilyPond files (*.mid *.ly)|*.mid;*.ly" };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                fileName = openFileDialog.FileName;
+            }
+            return fileName;
+        }
+
         public Staff OpenFile(string fileName)
         {
+            
             if (Path.GetExtension(fileName).EndsWith(".mid"))
             {
                 Sequence MidiSequence = new Sequence();
@@ -51,6 +65,32 @@ namespace DPA_Musicsheets.Managers
                 throw new NotSupportedException($"File extension {Path.GetExtension(fileName)} is not supported.");
             }
         }
+
+        public void SaveFile()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog() { Filter = "Midi|*.mid|Lilypond|*.ly|PDF|*.pdf" };
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string extension = System.IO.Path.GetExtension(saveFileDialog.FileName);
+                if (extension.EndsWith(".mid"))
+                {
+                    SaveToMidi(saveFileDialog.FileName);
+                }
+                else if (extension.EndsWith(".ly"))
+                {
+                    lillypondClass.SaveToLilypond(saveFileDialog.FileName);
+                }
+                else if (extension.EndsWith(".pdf"))
+                {
+                    SaveToPDF(saveFileDialog.FileName);
+                }
+                else
+                {
+                    MessageBox.Show($"Extension {extension} is not supported.");
+                }
+            }
+        }
+
 
 
         internal void SaveToMidi(string fileName)
