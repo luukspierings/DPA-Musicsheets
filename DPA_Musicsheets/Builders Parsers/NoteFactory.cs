@@ -10,11 +10,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
     class NoteFactory
     {
 
-        // central C
-        public int currentOctave = 5;
-
-
-        public BaseNote getNote(int duration, string pitch, bool dotted = false)
+        public BaseNote getNote(int duration, string pitch, int octave, bool dotted = false)
         {
             MusicNote note = new MusicNote();
 
@@ -28,7 +24,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
 
             note.Duration = 1.0f / duration;
             note.Dotted = dotted;
-            note.Octave = currentOctave;
+            note.Octave = octave;
 
             return note;
         }
@@ -40,17 +36,6 @@ namespace DPA_Musicsheets.New_models_and_patterns
 
             return note;
         }
-
-        public void increaseOctave()
-        {
-            currentOctave++;
-        }
-
-        public void decreaseOctave()
-        {
-            currentOctave--;
-        }
-
 
 
     }

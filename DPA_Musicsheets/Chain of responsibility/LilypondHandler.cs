@@ -34,9 +34,7 @@ namespace DPA_Musicsheets.Chain_of_responsibility
 
             StaffToLilypond parser = new StaffToLilypond();
 
-            textBox.Clear();
             textBox.Text = parser.load(staff);
-            Debug.Write(textBox.Text);
 
             //lilypondEditor.setState();
         }

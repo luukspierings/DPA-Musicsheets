@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DPA_Musicsheets.New_Models;
 
 namespace DPA_Musicsheets.Builders_Parsers
 {
-    class StaffToWPF
+    class StaffToWPF : IVisitor
     {
+        MusicNote previousNote;
 
+        MusicalSymbol symbolBuffer;
 
         public List<MusicalSymbol> load(Staff staff)
         {
@@ -20,7 +23,7 @@ namespace DPA_Musicsheets.Builders_Parsers
             try
             {
                 Clef currentClef = null;
-                MusicNote previousNote = (MusicNote)staff.bars.First().notes.First();
+                previousNote = (MusicNote)staff.getBars().First().notes.First();
                 int previousOctave = previousNote.Octave;
 
                 //LilypondToken currentToken = tokens.First();
@@ -38,56 +41,15 @@ namespace DPA_Musicsheets.Builders_Parsers
                 symbols.Add(new TimeSignature(TimeSignatureType.Numbers, (UInt32)staff.firstMeasure, (UInt32)staff.secondMeasure));
 
 
-                foreach (Bar b in staff.bars)
+                foreach (Bar b in staff.getBars())
                 {
-                    foreach(MusicNote n in b.notes)
+                    foreach(BaseNote n in b.notes)
                     {
-                        // Length
-                        //int noteLength = Int32.Parse(Regex.Match(currentToken.Value, @"\d+").Value);
-                        float noteLength = 1 / n.Duration;
 
-                        // Crosses and Moles
-                        int alter = 0;
-                        //alter += Regex.Matches(currentToken.Value, "is").Count;
-                        //alter -= Regex.Matches(currentToken.Value, "es|as").Count;
-
-                        if (n.PitchModifier == PitchModifier.Flat) alter++;
-                        if (n.PitchModifier == PitchModifier.Sharp) alter--;
+                        n.accept(this);
 
 
-                        // Octaves
-                        //int distanceWithPreviousNote = notesorder.IndexOf(currentToken.Value[0]) - notesorder.IndexOf(previousNote);
-                        //if (distanceWithPreviousNote > 3) // Shorter path possible the other way around
-                        //{
-                        //    distanceWithPreviousNote -= 7; // The number of notes in an octave
-                        //}
-                        //else if (distanceWithPreviousNote < -3)
-                        //{
-                        //    distanceWithPreviousNote += 7; // The number of notes in an octave
-                        //}
-
-                        //if (distanceWithPreviousNote + notesorder.IndexOf(previousNote) >= 7)
-                        //{
-                        //    previousOctave++;
-                        //}
-                        //else if (distanceWithPreviousNote + notesorder.IndexOf(previousNote) < 0)
-                        //{
-                        //    previousOctave--;
-                        //}
-
-                        //// Force up or down.
-                        //previousOctave += currentToken.Value.Count(c => c == '\'');
-                        //previousOctave -= currentToken.Value.Count(c => c == ',');
-
-                        previousNote = n;
-
-                        var note = new Note(n.Pitch.ToString().ToUpper(), alter, n.Octave, (MusicalSymbolDuration)noteLength, NoteStemDirection.Up, NoteTieType.None, new List<NoteBeamType>() { NoteBeamType.Single });
-                        //note.NumberOfDots += currentToken.Value.Count(c => c.Equals('.'));
-                        note.NumberOfDots += (n.Dotted) ? 1 : 0;
-
-
-
-                        symbols.Add(note);
+                        symbols.Add(symbolBuffer);
 
                     }
                     symbols.Add(new Barline());
@@ -138,7 +100,66 @@ namespace DPA_Musicsheets.Builders_Parsers
             return symbols;
         }
 
+        public void visit(Bar bar)
+        {
+        }
+
+        public void visit(Repeat repeat)
+        {
+        }
+
+        public void visit(MusicNote n)
+        {
+            // Length
+            //int noteLength = Int32.Parse(Regex.Match(currentToken.Value, @"\d+").Value);
+            float noteLength = 1 / n.Duration;
+
+            // Crosses and Moles
+            int alter = 0;
+            //alter += Regex.Matches(currentToken.Value, "is").Count;
+            //alter -= Regex.Matches(currentToken.Value, "es|as").Count;
+
+            if (n.PitchModifier == PitchModifier.Sharp) alter++;
+            if (n.PitchModifier == PitchModifier.Flat) alter--;
 
 
+            // Octaves
+            //int distanceWithPreviousNote = notesorder.IndexOf(currentToken.Value[0]) - notesorder.IndexOf(previousNote);
+            //if (distanceWithPreviousNote > 3) // Shorter path possible the other way around
+            //{
+            //    distanceWithPreviousNote -= 7; // The number of notes in an octave
+            //}
+            //else if (distanceWithPreviousNote < -3)
+            //{
+            //    distanceWithPreviousNote += 7; // The number of notes in an octave
+            //}
+
+            //if (distanceWithPreviousNote + notesorder.IndexOf(previousNote) >= 7)
+            //{
+            //    previousOctave++;
+            //}
+            //else if (distanceWithPreviousNote + notesorder.IndexOf(previousNote) < 0)
+            //{
+            //    previousOctave--;
+            //}
+
+            //// Force up or down.
+            //previousOctave += currentToken.Value.Count(c => c == '\'');
+            //previousOctave -= currentToken.Value.Count(c => c == ',');
+
+            previousNote = n;
+
+            var note = new Note(n.Pitch.ToString().ToUpper(), alter, n.Octave, (MusicalSymbolDuration)noteLength, NoteStemDirection.Up, NoteTieType.None, new List<NoteBeamType>() { NoteBeamType.Single });
+            //note.NumberOfDots += currentToken.Value.Count(c => c.Equals('.'));
+            note.NumberOfDots += (n.Dotted) ? 1 : 0;
+
+            symbolBuffer = note;
+        }
+
+        public void visit(RestNote n)
+        {
+            float noteLength = 1 / n.Duration;
+            symbolBuffer = new Rest((MusicalSymbolDuration)noteLength);
+        }
     }
 }

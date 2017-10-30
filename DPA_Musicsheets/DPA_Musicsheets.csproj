@@ -140,9 +140,15 @@
     <Compile Include="Models\LilypondTokenKind.cs" />
     <Compile Include="New Models\MusicNote.cs" />
     <Compile Include="Builders Parsers\NoteFactory.cs" />
+    <Compile Include="New Models\NoteCollection.cs" />
     <Compile Include="New Models\PitchModifier.cs" />
+    <Compile Include="New Models\AbsoluteRelative.cs" />
+    <Compile Include="New Models\RelativeRelative.cs" />
+    <Compile Include="New Models\Repeat.cs" />
     <Compile Include="New Models\RestNote.cs" />
     <Compile Include="New Models\Staff.cs" />
+    <Compile Include="Visitor\IVisitable.cs" />
+    <Compile Include="Visitor\IVisitor.cs" />
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -174,6 +180,23 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Files\Doorklinken.ly" />
+    <None Include="Files\Doorklinken.pdf" />
+    <None Include="Files\Herhaling_metAlternatief.ly" />
+    <None Include="Files\Keywords.ly" />
+    <None Include="Files\Keywords.pdf" />
+    <None Include="Files\KommasApostrof.ly" />
+    <None Include="Files\Maatstrepen.ly" />
+    <None Include="Files\Maatwissel.ly" />
+    <None Include="Files\Maatwissel.pdf" />
+    <None Include="Files\Mollen_Kruizen.ly" />
+    <None Include="Files\Nootlengten.ly" />
+    <None Include="Files\Nootlengten.pdf" />
+    <None Include="Files\Punten.ly" />
+    <None Include="Files\Punten.pdf" />
+    <None Include="Files\Rusten.ly" />
+    <None Include="Files\Standaard_noten.ly" />
+    <None Include="Files\Standaard_noten.pdf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

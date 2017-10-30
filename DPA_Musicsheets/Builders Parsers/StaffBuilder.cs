@@ -1,4 +1,5 @@
 ﻿using DPA_Musicsheets.Models;
+using DPA_Musicsheets.New_Models;
 using Sanford.Multimedia.Midi;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,9 @@ namespace DPA_Musicsheets.New_models_and_patterns
 {
     class StaffBuilder
     {
-
         public Staff staff;
+
+
 
         private NoteFactory noteFactory = new NoteFactory();
 
@@ -32,11 +34,16 @@ namespace DPA_Musicsheets.New_models_and_patterns
         {
             staff.tempo = tempo;
         }
-
-        public void newStaff(int firstMeasure = 4, int secondMeasure = 4, String sound = "treble")
+        public void setRelative(char pitch = 'c', int deltaOctave = 0)
         {
-            staff = new Staff(firstMeasure, secondMeasure, sound);
+            staff.relative = new RelativeRelative(pitch, deltaOctave);
+        }
+
+        public void newStaff(int firstMeasure = 4, int secondMeasure = 4, String sound = "treble", int tempo = 120)
+        {
+            staff = new Staff(firstMeasure, secondMeasure, sound, tempo);
             noteFactory = new NoteFactory();
+
         }
 
         public StaffBuilder()
@@ -52,23 +59,24 @@ namespace DPA_Musicsheets.New_models_and_patterns
             {
                 if (deltaOctave > 0)
                 {
-                    noteFactory.increaseOctave();
+                    staff.relative.increaseOctave();
                     deltaOctave--;
                 }
                 if (deltaOctave < 0)
                 {
-                    noteFactory.decreaseOctave();
+                    staff.relative.decreaseOctave();
                     deltaOctave++;
                 }
             }
 
-            if(pitch == "")
+            if(pitch == "r")
             {
                 note = noteFactory.getRest(duration);
             }
             else
             {
-                note = noteFactory.getNote(duration, pitch, isDotted);
+                char cPitch = pitch.ToCharArray()[0];
+                note = noteFactory.getNote(duration, pitch, staff.relative.getOctave(cPitch), isDotted);
             }
             staff.addNote(note);
         }
@@ -82,15 +90,24 @@ namespace DPA_Musicsheets.New_models_and_patterns
         {
             return staff;
         }
-
-        public Sequence getStaffSequence()
-        {
-            return new Sequence();
-        }
    
         
-
-
+        public void startRepeat()
+        {
+            staff.startRepeat();
+        }
+        public void setRepeatAmount(int amount)
+        {
+            staff.setRepeatAmount(amount);
+        }
+        public void endRepeat()
+        {
+            staff.endRepeat();
+        }
+        public void addAlternative()
+        {
+            staff.addAlternative();
+        }
 
 
     }

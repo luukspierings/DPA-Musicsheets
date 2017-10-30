@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DPA_Musicsheets.Visitor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,6 @@ namespace DPA_Musicsheets.Models
         protected float duration;
         public virtual float Duration { get { return duration; } set { duration = value; } }
 
-
+        public abstract void accept(IVisitor v);
     }
 }

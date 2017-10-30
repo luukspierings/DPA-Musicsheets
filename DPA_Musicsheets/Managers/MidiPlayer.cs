@@ -23,8 +23,7 @@ namespace DPA_Musicsheets.Managers
             _sequencer.ChannelMessagePlayed += ChannelMessagePlayed;
             _sequencer.PlayingCompleted += (playingSender, playingEvent) =>
             {
-                _sequencer.Stop();
-                _running = false;
+                stop();
             };
         }
 
