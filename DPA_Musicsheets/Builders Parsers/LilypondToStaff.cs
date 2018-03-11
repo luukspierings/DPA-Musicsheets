@@ -36,7 +36,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
         Regex endBlock = new Regex("}");
 
         Regex time = new Regex("\\\\time");
-        Regex timeMeasure = new Regex("[346]//[48]");
+        Regex timeMeasure = new Regex("[346]/[48]");
 
         Regex tempo = new Regex("\\\\tempo");
         Regex tempoValue = new Regex("4=[0-9]+");
