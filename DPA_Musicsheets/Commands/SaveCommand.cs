@@ -13,11 +13,10 @@ namespace DPA_Musicsheets.Commands
         FileHandler _fileHandler;
         MainController _controller;
 
-        public SaveCommand(MainController controller, FileHandler fileHandler, string pattern, string extension = "")
+        public SaveCommand(MainController controller, FileHandler fileHandler, string extension = "")
         {
             _fileHandler = fileHandler;
             _controller = controller;
-            _pattern = pattern;
             _extension = extension;
         }
 

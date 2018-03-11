@@ -8,16 +8,6 @@ namespace DPA_Musicsheets.Commands
 {
     abstract class Command
     {
-        protected string _pattern;
-
-        public string Pattern
-        {
-            get
-            {
-                return _pattern;
-            }
-        }
         public abstract void execute();
-
     }
 }

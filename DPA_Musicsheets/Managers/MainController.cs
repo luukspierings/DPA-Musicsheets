@@ -52,33 +52,30 @@ namespace DPA_Musicsheets.Managers
             ViewCOR.addHandler(new MidiHandler(player._sequencer));
             ViewCOR.addHandler(new WPFHandler(DrawableStaff));
 
-            mapKeys();
+            commands = new Dictionary<string, Command>
+            {
+                [CKey.InsertClef] = new InsertClefCommand(LilyTextBox),
+                [CKey.InsertTempo] = new InsertTempoCommand(LilyTextBox),
+
+                [CKey.InsertTime] = new InsertTimeCommand(LilyTextBox),
+                [CKey.InsertTime44] = new InsertTimeCommand(LilyTextBox, "4/4"),
+                [CKey.InsertTime34] = new InsertTimeCommand(LilyTextBox, "3/4"),
+                [CKey.InsertTime68] = new InsertTimeCommand(LilyTextBox, "6/8"),
+
+                [CKey.Open] = new OpenCommand(this, _fileHandler),
+                [CKey.Save] = new SaveCommand(this, _fileHandler),
+                [CKey.SavePdf] = new SaveCommand(this, _fileHandler, ".pdf")
+            };
         }
 
         public void executeCommand(string commandKey)
         {
+            Console.WriteLine(commandKey);
+
             if (commands.ContainsKey(commandKey))
             {
                 commands[commandKey].execute();
             }
-        }
-
-        public void mapKeys()
-        {
-            commands = new Dictionary<string, Command>
-            {
-                [CKey.Open] = new OpenCommand(CKey.Open, this, _fileHandler),
-                [CKey.InsertClef] = new InsertClefCommand(CKey.InsertClef),
-                [CKey.InsertTempo] = new InsertTempoCommand(CKey.InsertTempo),
-
-                [CKey.Save] = new SaveCommand(this, _fileHandler, CKey.Save),
-                [CKey.SavePdf] = new SaveCommand(this, _fileHandler, CKey.Save, ".pdf"),
-
-                [CKey.InsertTime] = new InsertTimeCommand(CKey.InsertTime),
-                [CKey.InsertTime44] = new InsertTimeCommand(CKey.InsertTime, "4/4"),
-                [CKey.InsertTime34] = new InsertTimeCommand(CKey.InsertTime, "3/4"),
-                [CKey.InsertTime68] = new InsertTimeCommand(CKey.InsertTime, "6/8")
-            };
         }
     }
 }

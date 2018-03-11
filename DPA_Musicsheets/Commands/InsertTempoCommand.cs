@@ -1,25 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows.Controls;
 
 namespace DPA_Musicsheets.Commands
 {
     class InsertTempoCommand : Command
     {
+        private const string TEMPO = "\\tempo 4=120";
+        private TextBox _textBox;
 
-        public InsertTempoCommand(string pattern)
+        public InsertTempoCommand(TextBox textBox)
         {
-            _pattern = pattern;
-
+            _textBox = textBox;
         }
 
         public override void execute()
         {
-
-
-
+            var selectionIndex = _textBox.SelectionStart;
+            _textBox.Text = _textBox.Text.Insert(selectionIndex, TEMPO);
+            _textBox.SelectionStart = selectionIndex + TEMPO.Length;
         }
     }
 }

@@ -15,9 +15,8 @@ namespace DPA_Musicsheets.Commands
         FileHandler fileHandler;
         MainController controller;
 
-        public OpenCommand(string pattern, MainController controller, FileHandler fileHandler)
+        public OpenCommand(MainController controller, FileHandler fileHandler)
         {
-            _pattern = pattern;
             this.fileHandler = fileHandler;
             this.controller = controller;
         }

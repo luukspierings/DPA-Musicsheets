@@ -79,9 +79,15 @@ namespace DPA_Musicsheets
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            if (!keysPressed.Contains(e.Key.ToString()))
+
+            var key = e.Key;
+            if (key == Key.System)
+                key = e.SystemKey;
+
+            var keyname = Enum.GetName(typeof(Key), key);
+            if (!keysPressed.Contains(keyname))
             {
-                keysPressed.Add(e.Key.ToString());
+                keysPressed.Add(keyname);
                 ExecuteCommand();
             }
         }
@@ -89,9 +95,15 @@ namespace DPA_Musicsheets
         protected override void OnKeyUp(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            if (keysPressed.Contains(e.Key.ToString()))
+
+            var key = e.Key;
+            if (key == Key.System)
+                key = e.SystemKey;
+
+            var keyname = Enum.GetName(typeof(Key), key);
+            if (keysPressed.Contains(keyname))
             {
-                keysPressed.Remove(e.Key.ToString());
+                keysPressed.Remove(keyname);
             }
         }
 
@@ -106,9 +118,11 @@ namespace DPA_Musicsheets
               (task, obj) =>
               {
                   string keysString = string.Empty;
-                  if (keysPressed.Count > 0)
+                  List<string> tempKeys = keysPressed;
+                  if (tempKeys.Count > 0)
                   {
-                      foreach (string key in keysPressed)
+                      
+                      foreach (string key in tempKeys)
                       {
                           keysString += key + "+";
                       }
@@ -120,8 +134,6 @@ namespace DPA_Musicsheets
                           controller.executeCommand(keysString);
                       });
                   }
-
-                 
 
               }, tokenSource.Token);
             }  
