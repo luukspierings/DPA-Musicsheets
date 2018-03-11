@@ -12,7 +12,6 @@ namespace DPA_Musicsheets.Commands
 {
     class OpenCommand : Command
     {
-
         FileHandler fileHandler;
         MainController controller;
 

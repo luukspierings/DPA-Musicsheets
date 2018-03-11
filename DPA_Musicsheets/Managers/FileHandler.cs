@@ -20,13 +20,11 @@ namespace DPA_Musicsheets.Managers
 {
     public class FileHandler
     {
-
         public Lillypond lillypondClass = new Lillypond();
         public Midi midiClass = new Midi();
 
         LilypondToStaff lilypondToStaff = new LilypondToStaff();
         MidiToStaff midiToStaff = new MidiToStaff();
-
 
         public String selectFile()
         {
@@ -91,16 +89,12 @@ namespace DPA_Musicsheets.Managers
             }
         }
 
-
-
         internal void SaveToMidi(string fileName)
         {
             Sequence sequence = midiClass.GetSequenceFromWPFStaffs(lillypondClass.WPFStaffs);
 
             sequence.Save(fileName);
         }
-
-        
 
         internal void SaveToPDF(string fileName)
         {

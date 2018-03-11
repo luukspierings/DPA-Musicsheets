@@ -1,22 +1,15 @@
 ﻿using Microsoft.Win32;
 using Sanford.Multimedia.Midi;
 using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using DPA_Musicsheets.Managers;
 using System.ComponentModel;
-using PSAMWPFControlLibrary;
-using PSAMControlLibrary;
-using DPA_Musicsheets.Chain_of_responsibility;
-using DPA_Musicsheets.New_models_and_patterns;
-using DPA_Musicsheets.Builders_Parsers;
-using DPA_Musicsheets.Models;
 using System.Collections.Generic;
-using DPA_Musicsheets.Commands;
 using System.Windows.Input;
 using System.Threading;
+using DPA_Musicsheets.Managers;
+using DPA_Musicsheets.Commands;
+
 
 namespace DPA_Musicsheets
 {
@@ -121,9 +114,15 @@ namespace DPA_Musicsheets
                       }
 
                       keysString = keysString.Remove(keysString.Length - 1);
+
+                      Dispatcher.Invoke(() =>
+                      {
+                          controller.executeCommand(keysString);
+                      });
                   }
 
-                  controller.executeCommand(keysString);
+                 
+
               }, tokenSource.Token);
             }  
         }

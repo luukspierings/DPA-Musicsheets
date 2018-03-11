@@ -57,10 +57,9 @@ namespace DPA_Musicsheets.Managers
 
         public void executeCommand(string commandKey)
         {
-            Command command = commands[commandKey];
-            if (command != null)
+            if (commands.ContainsKey(commandKey))
             {
-                command.execute();
+                commands[commandKey].execute();
             }
         }
 
@@ -72,8 +71,8 @@ namespace DPA_Musicsheets.Managers
                 [CKey.InsertClef] = new InsertClefCommand(CKey.InsertClef),
                 [CKey.InsertTempo] = new InsertTempoCommand(CKey.InsertTempo),
 
-                [CKey.Save] = new SaveCommand(CKey.Save),
-                [CKey.SavePdf] = new SaveCommand(CKey.Save, ".pdf"),
+                [CKey.Save] = new SaveCommand(this, _fileHandler, CKey.Save),
+                [CKey.SavePdf] = new SaveCommand(this, _fileHandler, CKey.Save, ".pdf"),
 
                 [CKey.InsertTime] = new InsertTimeCommand(CKey.InsertTime),
                 [CKey.InsertTime44] = new InsertTimeCommand(CKey.InsertTime, "4/4"),
