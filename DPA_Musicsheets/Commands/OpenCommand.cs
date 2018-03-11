@@ -1,12 +1,6 @@
 ﻿using DPA_Musicsheets.Chain_of_responsibility;
 using DPA_Musicsheets.Managers;
 using DPA_Musicsheets.Models;
-using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.Commands
 {

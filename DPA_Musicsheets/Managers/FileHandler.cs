@@ -39,7 +39,7 @@ namespace DPA_Musicsheets.Managers
 
         public Staff OpenFile(string fileName)
         {
-            
+
             if (Path.GetExtension(fileName).EndsWith(".mid"))
             {
                 Sequence MidiSequence = new Sequence();
@@ -55,7 +55,7 @@ namespace DPA_Musicsheets.Managers
                 {
                     sb.AppendLine(line);
                 }
-                
+
                 return lilypondToStaff.load(sb.ToString());
             }
             else
@@ -120,15 +120,23 @@ namespace DPA_Musicsheets.Managers
             };
 
             process.Start();
-            while (!process.HasExited) { /* Wait for exit */
-                }
-                if (sourceFolder != targetFolder || sourceFileName != targetFileName)
+            while (!process.HasExited)
+            { /* Wait for exit */
+            }
+            if (sourceFolder != targetFolder || sourceFileName != targetFileName)
             {
                 File.Move(sourceFolder + "\\" + sourceFileName + ".pdf", targetFolder + "\\" + targetFileName + ".pdf");
                 File.Delete(tmpFileName);
             }
         }
 
-        
+        private void SaveToLilypond(string fileName, string lilypondText)
+        {
+            using (StreamWriter outputFile = new StreamWriter(fileName))
+            {
+                outputFile.Write(lilypondText);
+                outputFile.Close();
+            }
+        }
     }
 }

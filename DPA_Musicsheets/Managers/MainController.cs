@@ -39,7 +39,6 @@ namespace DPA_Musicsheets.Managers
         public Handler ViewCOR;
         public LilypondEditor lilypondEditor;
 
-
         public MainController(TextBox fileTextBox, TextBox LilyTextBox)
         {
             this.fileTextBox = fileTextBox;
@@ -63,15 +62,13 @@ namespace DPA_Musicsheets.Managers
                 [CKey.InsertTime68] = new InsertTimeCommand(LilyTextBox, "6/8"),
 
                 [CKey.Open] = new OpenCommand(this, _fileHandler),
-                [CKey.Save] = new SaveCommand(this, _fileHandler),
-                [CKey.SavePdf] = new SaveCommand(this, _fileHandler, ".pdf")
+                [CKey.Save] = new SaveCommand(lilypondEditor, _fileHandler),
+                [CKey.SavePdf] = new SaveToPDFCommand(lilypondEditor)
             };
         }
 
         public void executeCommand(string commandKey)
         {
-            Console.WriteLine(commandKey);
-
             if (commands.ContainsKey(commandKey))
             {
                 commands[commandKey].execute();
