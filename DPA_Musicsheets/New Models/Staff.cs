@@ -9,6 +9,12 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.Models
 {
+
+    public enum Sound
+    {
+        TREBLE, BASS
+    }
+
     public class Staff
     {
         public AbsoluteRelative relative;
@@ -18,11 +24,11 @@ namespace DPA_Musicsheets.Models
 
         public int firstMeasure { get; set; }    // bovenste maat 
         public int secondMeasure { get; set; }   // onderste maat
-        public String sound { get; set; }        // treble of bass
+        public Sound sound { get; set; }        // treble of bass
         public int tempo { get; set; }           // tempo
 
 
-        public Staff(int firstMeasure, int secondMeasure, String sound, int tempo)
+        public Staff(int firstMeasure, int secondMeasure, Sound sound, int tempo)
         {
             this.firstMeasure = firstMeasure;
             this.secondMeasure = secondMeasure;
@@ -86,11 +92,11 @@ namespace DPA_Musicsheets.Models
         }
         public void setRepeatAmount(int amount)
         {
-            ((Repeat)currentBar).setAmount(amount);
+            ((Repeat)currentBar)?.setAmount(amount);
         }
         public void addAlternative()
         {
-            ((Repeat)currentBar).newAlternative();
+            ((Repeat)currentBar)?.newAlternative();
         }
         public void endRepeat()
         {

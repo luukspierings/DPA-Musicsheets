@@ -12,34 +12,30 @@ namespace DPA_Musicsheets.Builders_Parsers
     class StaffToLilypond : IVisitor
     {
         private AbsoluteRelative relative;
-        private string contentBuffer;
+
+        private string lilyContent;
 
         public String load(Staff staff)
         {
-            string lilyContent = "";
+            lilyContent = "";
 
             relative = staff.relative;
             relative.reset();
 
             lilyContent += "\\relative c' {";
-            lilyContent += "\n\\clef " + staff.sound;
+            lilyContent += "\n\\clef ";
+            if (staff.sound == Sound.TREBLE) lilyContent += "treble";
+            if (staff.sound == Sound.BASS) lilyContent += "bass";
+
             lilyContent += "\n\\time " + staff.firstMeasure + "/" + staff.secondMeasure;
             lilyContent += "\n\\tempo 4=" + staff.tempo;
             lilyContent += "\n";
 
             //int lastOcave = relative.getLastOctave();
-
-            foreach (Bar b in staff.getBars())
+            
+            foreach(NoteCollection nc in staff.bars)
             {
-
-                for(int x = 0; x < b.notes.Count; x++)
-                {
-                    b.notes[x].accept(this);
-
-                    lilyContent += contentBuffer;
-                }
-                
-                lilyContent += "|\n";
+                nc.accept(this);
             }
 
             return lilyContent;
@@ -49,10 +45,36 @@ namespace DPA_Musicsheets.Builders_Parsers
 
         public void visit(Bar bar)
         {
+            for (int x = 0; x < bar.notes.Count; x++)
+            { 
+                bar.notes[x].accept(this);
+            }
+            lilyContent += "|\n";
         }
 
         public void visit(Repeat repeat)
         {
+            lilyContent += "\\repeat volta " + repeat.repeating + " {\n";
+            foreach(Bar b in repeat.bars)
+            {
+                b.accept(this);
+            }
+            lilyContent += "}\n";
+            if(repeat.alternatives.Count > 0)
+            {
+                lilyContent += "\\alternative {\n";
+                foreach(List<Bar> alt in repeat.alternatives)
+                {
+                    lilyContent += "{\n";
+                    foreach(Bar altb in alt)
+                    {
+                        altb.accept(this);
+                    }
+                    lilyContent += "}\n";
+                }
+                lilyContent += "}\n";
+            }
+
         }
 
         public void visit(MusicNote note)
@@ -79,7 +101,7 @@ namespace DPA_Musicsheets.Builders_Parsers
 
             int duration = (int)(1.0f / note.BaseDuration);
 
-            contentBuffer =
+            lilyContent +=
                         note.Pitch.ToString() +
                         pitchModifierString +
                         octaveString +
@@ -94,7 +116,7 @@ namespace DPA_Musicsheets.Builders_Parsers
         {
             int duration = (int)(1.0f / note.Duration);
 
-            contentBuffer =
+            lilyContent +=
                         "r" +
                         duration +
                         " ";

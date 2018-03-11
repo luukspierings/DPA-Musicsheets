@@ -1,4 +1,5 @@
 ﻿using DPA_Musicsheets.Builders_Parsers;
+using DPA_Musicsheets.Managers;
 using DPA_Musicsheets.Models;
 using Sanford.Multimedia.Midi;
 using System;
@@ -12,12 +13,12 @@ namespace DPA_Musicsheets.Chain_of_responsibility
     class MidiHandler : Handler
     {
 
-        Sequencer sequencer;
+        private MidiPlayer player;
 
-        public MidiHandler(Sequencer midisequencer)
+        public MidiHandler(MidiPlayer player)
         {
             handleType = ContentType.MIDI;
-            sequencer = midisequencer;
+            this.player = player;
         }
 
         public override void handle(Staff staff, ContentType contentType)
@@ -29,7 +30,7 @@ namespace DPA_Musicsheets.Chain_of_responsibility
             }
 
             StaffToMidi staffToMidi = new StaffToMidi();
-            sequencer.Sequence = staffToMidi.load(staff);
+            player.load(staffToMidi.load(staff));
 
 
         }

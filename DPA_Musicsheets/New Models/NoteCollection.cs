@@ -1,4 +1,5 @@
 ﻿using DPA_Musicsheets.Models;
+using DPA_Musicsheets.Visitor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.New_Models
 {
-    public interface NoteCollection
+    public interface NoteCollection : IVisitable
     {
 
         List<Bar> getBars();
@@ -17,7 +18,6 @@ namespace DPA_Musicsheets.New_Models
         float getDuration();
 
         bool newBar();
-
 
     }
 }

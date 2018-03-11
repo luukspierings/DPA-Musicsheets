@@ -48,7 +48,7 @@ namespace DPA_Musicsheets.Managers
             lilypondEditor = new LilypondEditor(LilyTextBox, this);
 
             ViewCOR = new LilypondHandler(LilyTextBox, lilypondEditor);
-            ViewCOR.addHandler(new MidiHandler(player._sequencer));
+            ViewCOR.addHandler(new MidiHandler(player));
             ViewCOR.addHandler(new WPFHandler(DrawableStaff));
 
             commands = new Dictionary<string, Command>

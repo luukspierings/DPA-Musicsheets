@@ -14,8 +14,6 @@ namespace DPA_Musicsheets.New_models_and_patterns
     {
         public Staff staff;
 
-
-
         private NoteFactory noteFactory = new NoteFactory();
 
         public void setFirstMeasure(int fMeasure)
@@ -26,7 +24,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
         {
             staff.secondMeasure = sMeasure;
         }
-        public void setSound(String sound)
+        public void setSound(Sound sound)
         {
             staff.sound = sound;
         }
@@ -39,7 +37,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
             staff.relative = new RelativeRelative(pitch, deltaOctave);
         }
 
-        public void newStaff(int firstMeasure = 4, int secondMeasure = 4, String sound = "treble", int tempo = 120)
+        public void newStaff(int firstMeasure = 4, int secondMeasure = 4, Sound sound = Sound.TREBLE, int tempo = 120)
         {
             staff = new Staff(firstMeasure, secondMeasure, sound, tempo);
             noteFactory = new NoteFactory();
@@ -90,24 +88,11 @@ namespace DPA_Musicsheets.New_models_and_patterns
         {
             return staff;
         }
-   
-        
-        public void startRepeat()
-        {
-            staff.startRepeat();
-        }
-        public void setRepeatAmount(int amount)
-        {
-            staff.setRepeatAmount(amount);
-        }
-        public void endRepeat()
-        {
-            staff.endRepeat();
-        }
-        public void addAlternative()
-        {
-            staff.addAlternative();
-        }
+
+        public void startRepeat()               => staff.startRepeat();
+        public void setRepeatAmount(int amount) => staff.setRepeatAmount(amount);
+        public void endRepeat()                 => staff.endRepeat();
+        public void addAlternative()            => staff.addAlternative();
 
 
     }
