@@ -14,8 +14,6 @@ namespace DPA_Musicsheets.New_models_and_patterns
     {
         public Staff staff;
 
-
-
         private NoteFactory noteFactory = new NoteFactory();
 
         public void setFirstMeasure(int fMeasure)
@@ -90,24 +88,11 @@ namespace DPA_Musicsheets.New_models_and_patterns
         {
             return staff;
         }
-   
-        
-        public void startRepeat()
-        {
-            staff.startRepeat();
-        }
-        public void setRepeatAmount(int amount)
-        {
-            staff.setRepeatAmount(amount);
-        }
-        public void endRepeat()
-        {
-            staff.endRepeat();
-        }
-        public void addAlternative()
-        {
-            staff.addAlternative();
-        }
+
+        public void startRepeat()               => staff.startRepeat();
+        public void setRepeatAmount(int amount) => staff.setRepeatAmount(amount);
+        public void endRepeat()                 => staff.endRepeat();
+        public void addAlternative()            => staff.addAlternative();
 
 
     }

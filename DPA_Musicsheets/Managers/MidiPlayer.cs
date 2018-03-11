@@ -27,6 +27,15 @@ namespace DPA_Musicsheets.Managers
             };
         }
 
+        public void load(Sequence sequence)
+        {
+            if (_sequencer != null)
+            {
+                stop();
+                _sequencer.Sequence = sequence;
+            }
+        }
+
         public void play()
         {
             if (!_running && _sequencer.Sequence != null)

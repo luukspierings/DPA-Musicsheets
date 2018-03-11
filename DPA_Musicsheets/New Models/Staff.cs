@@ -86,11 +86,11 @@ namespace DPA_Musicsheets.Models
         }
         public void setRepeatAmount(int amount)
         {
-            ((Repeat)currentBar).setAmount(amount);
+            ((Repeat)currentBar)?.setAmount(amount);
         }
         public void addAlternative()
         {
-            ((Repeat)currentBar).newAlternative();
+            ((Repeat)currentBar)?.newAlternative();
         }
         public void endRepeat()
         {

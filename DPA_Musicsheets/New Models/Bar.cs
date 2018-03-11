@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.Models
 {
-    public class Bar : NoteCollection, IVisitable
+    public class Bar : NoteCollection
     {
 
         public List<BaseNote> notes;

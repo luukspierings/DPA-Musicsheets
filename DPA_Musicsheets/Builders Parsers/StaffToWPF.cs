@@ -15,9 +15,11 @@ namespace DPA_Musicsheets.Builders_Parsers
 
         MusicalSymbol symbolBuffer;
 
+        List<MusicalSymbol> symbols;
+
         public List<MusicalSymbol> load(Staff staff)
         {
-            List<MusicalSymbol> symbols = new List<MusicalSymbol>();
+            symbols = new List<MusicalSymbol>();
             //message = "";
 
             try
@@ -43,20 +45,8 @@ namespace DPA_Musicsheets.Builders_Parsers
 
                 foreach (Bar b in staff.getBars())
                 {
-                    foreach(BaseNote n in b.notes)
-                    {
-
-                        n.accept(this);
-
-
-                        symbols.Add(symbolBuffer);
-
-                    }
-                    symbols.Add(new Barline());
-
+                    b.accept(this);
                 }
-
-
 
 
 
@@ -102,6 +92,12 @@ namespace DPA_Musicsheets.Builders_Parsers
 
         public void visit(Bar bar)
         {
+            foreach (BaseNote n in bar.notes)
+            {
+                n.accept(this);
+                symbols.Add(symbolBuffer);
+            }
+            symbols.Add(new Barline());
         }
 
         public void visit(Repeat repeat)

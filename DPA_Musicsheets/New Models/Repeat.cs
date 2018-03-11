@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.New_Models
 {
-    public class Repeat : NoteCollection, IVisitable
+    public class Repeat : NoteCollection
     {
 
         public List<Bar> bars = new List<Bar>();
-        public Bar currentBar;
-        public int repeating;
+        public Bar currentBar = new Bar();
+        public int repeating = 1;
         public List<List<Bar>> alternatives = new List<List<Bar>>();
-        public List<Bar> currentAlternative;
+        public List<Bar> currentAlternative = new List<Bar>();
 
         private bool addingAlternative = false;
 

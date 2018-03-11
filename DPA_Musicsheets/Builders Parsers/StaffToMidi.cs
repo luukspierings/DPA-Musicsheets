@@ -53,13 +53,7 @@ namespace DPA_Musicsheets.Builders_Parsers
 
             foreach (Bar b in staff.getBars())
             {
-
-                for (int x = 0; x < b.notes.Count; x++)
-                {
-                    b.notes[x].accept(this);
-
-                }
-
+                b.accept(this);
             }
 
             notesTrack.Insert(absoluteTicks, MetaMessage.EndOfTrackMessage);
@@ -70,10 +64,15 @@ namespace DPA_Musicsheets.Builders_Parsers
 
         public void visit(Bar bar)
         {
+            for (int x = 0; x < bar.notes.Count; x++)
+            {
+                bar.notes[x].accept(this);
+            }
         }
 
         public void visit(Repeat repeat)
         {
+            // This class doesn't need to know when the music is repeating, so just visit all the bars.
         }
 
         public void visit(MusicNote m)

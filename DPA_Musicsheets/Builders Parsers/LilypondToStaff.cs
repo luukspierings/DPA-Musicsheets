@@ -44,6 +44,9 @@ namespace DPA_Musicsheets.New_models_and_patterns
         Regex clef = new Regex("\\\\clef");
         Regex clefValue = new Regex("[treble|bass]");
 
+        bool inRepeat = false;
+        bool inAlternative = false;
+        bool inSubAlternative = false;
 
         public Staff load(string content)
         {
@@ -59,12 +62,16 @@ namespace DPA_Musicsheets.New_models_and_patterns
 
             Debug.WriteLine(content);
 
+            List<string> buffer = new List<string>();
+            foreach(string s in content.Split(' '))
+            {
+                if (s != "") buffer.Add(s);
+            }
+            lilyArray = buffer.ToArray();
 
-            lilyArray = content.Split(' ').ToArray();
 
             for (int i = 0; i < lilyArray.Length; i++)
             {
-
                 if (relative.IsMatch(lilyArray[i]))
                 {
 
@@ -113,7 +120,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
                         builder.setFirstMeasure(Int32.Parse(values[0]));
                         builder.setSecondMeasure(Int32.Parse(values[1]));
                     }
-                    
+
                 }
 
                 if (tempo.IsMatch(lilyArray[i]))
@@ -126,8 +133,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
                     }
                 }
 
-
-                if (notes.IsMatch(lilyArray[i])){
+                if (notes.IsMatch(lilyArray[i])) {
 
                     Match pitchM = pitch.Match(lilyArray[i]);
                     MatchCollection octaveUpM = octaveUp.Matches(lilyArray[i]);
@@ -154,16 +160,66 @@ namespace DPA_Musicsheets.New_models_and_patterns
                     if (durationM.Success) durationV = Int32.Parse(durationM.Value);
                     if (dottedM.Success) dottedV = true;
 
-                    if(durationV != 0)
+                    if (durationV != 0)
                     {
                         builder.addNote(durationV, pitchV, dOctave, dottedV);
                     }
                 }
 
-                if(lilyArray[i] == "|")
+                if (lilyArray[i] == "|")
                 {
                     builder.addBarLine();
                 }
+
+                if (repeat.IsMatch(lilyArray[i]))
+                {
+                    builder.startRepeat();
+                    inRepeat = true;
+                }
+                if (repeatVolta.IsMatch(lilyArray[i]))
+                {
+                    Match repeatAmountM = repeatAmount.Match(lilyArray[i + 1]);
+                    if (repeatAmountM.Success)
+                    {
+                        builder.setRepeatAmount(Int32.Parse(repeatAmountM.Value));
+                        i++;
+                    }
+                }
+                if (newBlock.IsMatch(lilyArray[i]))
+                {
+                    if (inRepeat && inAlternative)
+                    {
+                        builder.addAlternative();
+                        inSubAlternative = true;
+                    }
+                }
+                if(alternative.IsMatch(lilyArray[i]))
+                {
+                    inAlternative = true;
+                }
+                if (endBlock.IsMatch(lilyArray[i]))
+                {
+                    bool repeatWithAlternative = i+1 < lilyArray.Length && alternative.IsMatch(lilyArray[i + 1]);
+
+                    if (inRepeat && !repeatWithAlternative && !inAlternative && !inSubAlternative)
+                    {
+                        builder.endRepeat();
+                        inRepeat = false;
+                    }
+                    else if (inRepeat && inAlternative && !inSubAlternative)
+                    {
+                        inAlternative = false;
+                        inRepeat = false;
+                        builder.addAlternative();
+                        builder.endRepeat();
+                    }
+                    else if(inRepeat && inAlternative && inSubAlternative)
+                    {
+                        inSubAlternative = false;
+                    }
+                }
+                
+
 
             }
 
