@@ -40,11 +40,8 @@ namespace DPA_Musicsheets.Commands
             string withoutExtension = Path.GetFileNameWithoutExtension(_fileName);
             string tmpFileName = $"{_fileName}-tmp.ly";
 
-            using (StreamWriter outputFile = new StreamWriter(tmpFileName))
-            {
-                outputFile.Write(_lilypondEditor.GetText());
-                outputFile.Close();
-            }
+            SaveToLilypondCommand saveToLilypond = new SaveToLilypondCommand(_lilypondEditor, tmpFileName);
+            saveToLilypond.execute();
 
             string lilypondLocation = @"C:\Program Files (x86)\LilyPond\usr\bin\lilypond.exe";
             string sourceFolder = Path.GetDirectoryName(tmpFileName);
