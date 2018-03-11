@@ -1,15 +1,9 @@
 ﻿using DPA_Musicsheets.Chain_of_responsibility;
 using DPA_Musicsheets.Commands;
 using DPA_Musicsheets.Memento;
-using DPA_Musicsheets.Models;
 using PSAMControlLibrary;
-using Sanford.Multimedia.Midi;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace DPA_Musicsheets.Managers
