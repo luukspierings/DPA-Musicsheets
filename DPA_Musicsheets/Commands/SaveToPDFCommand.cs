@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DPA_Musicsheets.Commands
 {
@@ -41,7 +42,6 @@ namespace DPA_Musicsheets.Commands
 
             using (StreamWriter outputFile = new StreamWriter(tmpFileName))
             {
-                Console.WriteLine(_lilypondEditor.GetText());
                 outputFile.Write(_lilypondEditor.GetText());
                 outputFile.Close();
             }
@@ -67,12 +67,23 @@ namespace DPA_Musicsheets.Commands
             while (!process.HasExited)
             { /* Wait for exit */
             }
-            if (sourceFolder != targetFolder || sourceFileName != targetFileName)
-            {
-                File.Move(sourceFolder + "\\" + sourceFileName + ".pdf", targetFolder + "\\" + targetFileName + ".pdf");
-                File.Delete(tmpFileName);
-            }
 
+
+            try
+            {
+                if (sourceFolder != targetFolder || sourceFileName != targetFileName)
+                {
+                    File.Move(sourceFolder + "\\" + sourceFileName + ".pdf", targetFolder + "\\" + targetFileName + ".pdf");
+                    File.Delete(tmpFileName);
+                }
+
+                MessageBox.Show("Successful saved to PDF");
+            }
+            catch
+            {
+                MessageBox.Show("Could not convert to PDF");
+            }
+           
             _fileName = string.Empty;
         }
     }
