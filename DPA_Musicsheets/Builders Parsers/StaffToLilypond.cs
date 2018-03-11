@@ -22,13 +22,13 @@ namespace DPA_Musicsheets.Builders_Parsers
             relative = staff.relative;
             relative.reset();
 
-            lilyContent += "\\relative c' {";
+            lilyContent += "\\relative c' { ";
             lilyContent += "\n\\clef ";
-            if (staff.sound == Sound.TREBLE) lilyContent += "treble";
-            if (staff.sound == Sound.BASS) lilyContent += "bass";
+            if (staff.sound == Sound.TREBLE) lilyContent += "treble ";
+            if (staff.sound == Sound.BASS) lilyContent += "bass ";
 
-            lilyContent += "\n\\time " + staff.firstMeasure + "/" + staff.secondMeasure;
-            lilyContent += "\n\\tempo 4=" + staff.tempo;
+            lilyContent += "\n\\time " + staff.firstMeasure + "/" + staff.secondMeasure + " ";
+            lilyContent += "\n\\tempo 4=" + staff.tempo + " ";
             lilyContent += "\n";
 
             //int lastOcave = relative.getLastOctave();
@@ -38,7 +38,7 @@ namespace DPA_Musicsheets.Builders_Parsers
                 nc.accept(this);
             }
 
-            lilyContent += "}";
+            lilyContent += "} ";
 
             return lilyContent;
         }
@@ -51,30 +51,30 @@ namespace DPA_Musicsheets.Builders_Parsers
             { 
                 bar.notes[x].accept(this);
             }
-            lilyContent += "|\n";
+            lilyContent += "| \n";
         }
 
         public void visit(Repeat repeat)
         {
-            lilyContent += "\\repeat volta " + repeat.repeating + " {\n";
+            lilyContent += "\\repeat volta " + repeat.repeating + " { \n";
             foreach(Bar b in repeat.bars)
             {
                 b.accept(this);
             }
-            lilyContent += "}\n";
+            lilyContent += "} \n";
             if(repeat.alternatives.Count > 0)
             {
-                lilyContent += "\\alternative {\n";
+                lilyContent += "\\alternative { \n";
                 foreach(List<Bar> alt in repeat.alternatives)
                 {
-                    lilyContent += "{\n";
+                    lilyContent += "{ \n";
                     foreach(Bar altb in alt)
                     {
                         altb.accept(this);
                     }
-                    lilyContent += "}\n";
+                    lilyContent += "} \n";
                 }
-                lilyContent += "}\n";
+                lilyContent += "} \n";
             }
 
         }
