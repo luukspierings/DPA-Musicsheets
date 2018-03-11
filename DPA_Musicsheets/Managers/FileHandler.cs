@@ -58,10 +58,8 @@ namespace DPA_Musicsheets.Managers
 
                 return lilypondToStaff.load(sb.ToString());
             }
-            else
-            {
-                throw new NotSupportedException($"File extension {Path.GetExtension(fileName)} is not supported.");
-            }
+
+            return null;
         }
 
         public void SaveFile()
