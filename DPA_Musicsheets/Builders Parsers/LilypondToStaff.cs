@@ -42,7 +42,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
         Regex tempoValue = new Regex("4=[0-9]+");
 
         Regex clef = new Regex("\\\\clef");
-        Regex clefValue = new Regex("[treble|bass]");
+        Regex clefValue = new Regex("(treble|bass)");
 
         bool inRepeat = false;
         bool inAlternative = false;
@@ -107,7 +107,11 @@ namespace DPA_Musicsheets.New_models_and_patterns
                 if (clef.IsMatch(lilyArray[i]))
                 {
                     Match clefM = clefValue.Match(lilyArray[i + 1]);
-                    if (clefM.Success) builder.setSound(clefM.Value);
+                    if (clefM.Success)
+                    {
+                        if(clefM.Value == "treble") builder.setSound(Sound.TREBLE);
+                        if(clefM.Value == "bass") builder.setSound(Sound.BASS);
+                    }
                 }
 
                 if (time.IsMatch(lilyArray[i]))

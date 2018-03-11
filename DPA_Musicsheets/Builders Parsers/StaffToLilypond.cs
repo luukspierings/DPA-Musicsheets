@@ -23,7 +23,10 @@ namespace DPA_Musicsheets.Builders_Parsers
             relative.reset();
 
             lilyContent += "\\relative c' {";
-            lilyContent += "\n\\clef " + staff.sound;
+            lilyContent += "\n\\clef ";
+            if (staff.sound == Sound.TREBLE) lilyContent += "treble";
+            if (staff.sound == Sound.BASS) lilyContent += "bass";
+
             lilyContent += "\n\\time " + staff.firstMeasure + "/" + staff.secondMeasure;
             lilyContent += "\n\\tempo 4=" + staff.tempo;
             lilyContent += "\n";

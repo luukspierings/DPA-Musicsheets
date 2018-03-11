@@ -24,7 +24,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
         {
             staff.secondMeasure = sMeasure;
         }
-        public void setSound(String sound)
+        public void setSound(Sound sound)
         {
             staff.sound = sound;
         }
@@ -37,7 +37,7 @@ namespace DPA_Musicsheets.New_models_and_patterns
             staff.relative = new RelativeRelative(pitch, deltaOctave);
         }
 
-        public void newStaff(int firstMeasure = 4, int secondMeasure = 4, String sound = "treble", int tempo = 120)
+        public void newStaff(int firstMeasure = 4, int secondMeasure = 4, Sound sound = Sound.TREBLE, int tempo = 120)
         {
             staff = new Staff(firstMeasure, secondMeasure, sound, tempo);
             noteFactory = new NoteFactory();
