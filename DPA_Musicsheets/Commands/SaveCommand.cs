@@ -22,8 +22,6 @@ namespace DPA_Musicsheets.Commands
             {
 
             }
-
-
         }
     }
 }

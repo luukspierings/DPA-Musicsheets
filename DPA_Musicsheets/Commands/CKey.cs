@@ -9,18 +9,18 @@ namespace DPA_Musicsheets.Commands
     public static class CKey
     {
 
-        public static string Open         { get { return "ctrl+o"; } }
-        public static string InsertClef   { get { return "alt+c"; } }
-        public static string InsertTempo  { get { return "alt+s"; } }
+        public static string Open         { get { return "LeftCtrl+O"; } }
+        public static string InsertClef   { get { return "LeftShift+C"; } }
+        public static string InsertTempo  { get { return "LeftShift+S"; } }
 
 
-        public static string Save         { get { return "ctrl+s"; } }
-        public static char SavePdf        { get { return 'p'; } }
+        public static string Save         { get { return "LeftCtrl+S"; } }
+        public static string SavePdf        { get { return "LeftCtrl+S+P"; } }
 
-        public static string InsertTime   { get { return "alt+t"; } }
-        public static char InsertTime44   { get { return '4'; } }
-        public static char InsertTime34   { get { return '3'; } }
-        public static char InsertTime68   { get { return '6'; } }
+        public static string InsertTime   { get { return "LeftShift+T"; } }
+        public static string InsertTime44   { get { return "LeftShift+T+4"; } }
+        public static string InsertTime34   { get { return "LeftShift+T+3"; } }
+        public static string InsertTime68   { get { return "LeftShift+T+6"; } }
 
     }
 }
