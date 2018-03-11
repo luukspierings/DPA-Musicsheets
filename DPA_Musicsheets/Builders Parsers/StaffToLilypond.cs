@@ -38,7 +38,7 @@ namespace DPA_Musicsheets.Builders_Parsers
                 nc.accept(this);
             }
 
-            lilyContent += "32 }";
+            lilyContent += "}";
 
             return lilyContent;
         }
