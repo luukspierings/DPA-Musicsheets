@@ -42,8 +42,6 @@ namespace DPA_Musicsheets.Builders_Parsers
                 lilyContent += "|\n";
             }
 
-            lilyContent += "32 }";
-
             return lilyContent;
         }
 

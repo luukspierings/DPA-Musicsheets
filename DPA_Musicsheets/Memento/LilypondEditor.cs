@@ -33,6 +33,11 @@ namespace DPA_Musicsheets.Memento
             setState();
         }
 
+        public string GetText()
+        {
+            return originator.getMemento().getState();
+        }
+
         public void undo()
         {
             LilyMemento memento = caretaker.undoMemento();
@@ -75,7 +80,7 @@ namespace DPA_Musicsheets.Memento
                     controller.ViewCOR.handle(staff, ContentType.MIDI);
                 }
             }, TaskScheduler.FromCurrentSynchronizationContext());
-            
+
         }
 
     }

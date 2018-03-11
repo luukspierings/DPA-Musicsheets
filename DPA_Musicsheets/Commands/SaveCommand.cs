@@ -1,9 +1,6 @@
 ﻿using DPA_Musicsheets.Managers;
+using DPA_Musicsheets.Memento;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DPA_Musicsheets.Commands
 {
@@ -11,20 +8,23 @@ namespace DPA_Musicsheets.Commands
     {
         string _extension;
         FileHandler _fileHandler;
-        MainController _controller;
+        LilypondEditor _lilypondEditor;
 
-        public SaveCommand(MainController controller, FileHandler fileHandler, string extension = "")
+        public SaveCommand(LilypondEditor lilypondEditor, FileHandler fileHandler, string extension = "")
         {
             _fileHandler = fileHandler;
-            _controller = controller;
+            _lilypondEditor = lilypondEditor;
             _extension = extension;
         }
 
         public override void execute()
         {
-            if(_extension != "")
-            {
+            _fileHandler.SaveFile();
 
+
+            if (_extension != "")
+            {
+               
             }
         }
     }
