@@ -121,9 +121,7 @@
     <Compile Include="Commands\SaveCommand.cs" />
     <Compile Include="Commands\SaveToLilypondCommand.cs" />
     <Compile Include="Commands\SaveToPDFCommand.cs" />
-    <Compile Include="Managers\Lillypond.cs" />
     <Compile Include="Managers\MainController.cs" />
-    <Compile Include="Managers\Midi.cs" />
     <Compile Include="Events messages\MidiSequenceEventArgs.cs" />
     <Compile Include="Events messages\WPFStaffsEventArgs.cs" />
     <Compile Include="Events messages\LilypondEventArgs.cs" />

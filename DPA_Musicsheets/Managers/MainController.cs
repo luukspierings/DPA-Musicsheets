@@ -26,7 +26,7 @@ namespace DPA_Musicsheets.Managers
         }
 
         public MidiPlayer player;
-        private FileHandler _fileHandler;
+        public FileHandler FileHandler { get; set; }
         public ObservableCollection<MusicalSymbol> DrawableStaff { get; set; }
 
         private Dictionary<string, Command> commands;
@@ -36,7 +36,7 @@ namespace DPA_Musicsheets.Managers
         public MainController(TextBox fileTextBox, TextBox LilyTextBox)
         {
             this.fileTextBox = fileTextBox;
-            _fileHandler = new FileHandler();
+            FileHandler = new FileHandler();
             DrawableStaff = new ObservableCollection<MusicalSymbol>();
             player = new MidiPlayer();
             lilypondEditor = new LilypondEditor(LilyTextBox, this);
@@ -55,8 +55,8 @@ namespace DPA_Musicsheets.Managers
                 [CKey.InsertTime34] = new InsertTimeCommand(LilyTextBox, "3/4"),
                 [CKey.InsertTime68] = new InsertTimeCommand(LilyTextBox, "6/8"),
 
-                [CKey.Open] = new OpenCommand(this, _fileHandler),
-                [CKey.Save] = new SaveCommand(lilypondEditor, _fileHandler),
+                [CKey.Open] = new OpenCommand(this),
+                [CKey.Save] = new SaveCommand(lilypondEditor),
                 [CKey.SavePdf] = new SaveToPDFCommand(lilypondEditor)
             };
         }

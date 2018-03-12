@@ -29,7 +29,6 @@ namespace DPA_Musicsheets.Managers
 
         public Staff OpenFile(string fileName)
         {
-
             if (Path.GetExtension(fileName).EndsWith(".mid"))
             {
                 Sequence MidiSequence = new Sequence();

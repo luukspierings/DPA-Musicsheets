@@ -6,15 +6,12 @@ using System.Windows;
 
 namespace DPA_Musicsheets.Commands
 {
-    class SaveCommand : Command
+    class SaveCommand: Command
     {
-        string _extension;
-        FileHandler _fileHandler;
         LilypondEditor _lilypondEditor;
 
-        public SaveCommand(LilypondEditor lilypondEditor, FileHandler fileHandler)
+        public SaveCommand(LilypondEditor lilypondEditor)
         {
-            _fileHandler = fileHandler;
             _lilypondEditor = lilypondEditor;
         }
 

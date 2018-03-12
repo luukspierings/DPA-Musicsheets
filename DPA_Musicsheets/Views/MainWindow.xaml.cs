@@ -38,11 +38,13 @@ namespace DPA_Musicsheets
 
         private void OpenFile(object sender, RoutedEventArgs e)
         {
-            controller.executeCommand(CKey.Open);
+            OpenCommand openCommand = new OpenCommand(controller);
+            openCommand.execute();
         }
         private void SaveContent(object sender, RoutedEventArgs e)
         {
-            controller.executeCommand(CKey.Save);
+            SaveCommand saveCommand = new SaveCommand(controller.lilypondEditor);
+            saveCommand.execute();
         }
 
         private void PlayContent(object sender, RoutedEventArgs e)
@@ -105,6 +107,12 @@ namespace DPA_Musicsheets
             {
                 keysPressed.Remove(keyname);
             }
+        }
+
+        protected override void OnDeactivated(EventArgs e)
+        {
+            keysPressed.Clear();
+            base.OnDeactivated(e);
         }
 
         private void ExecuteCommand()
